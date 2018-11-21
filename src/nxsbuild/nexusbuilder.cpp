@@ -716,7 +716,7 @@ void NexusBuilder::createMeshLevel(KDTreeSoup *input, StreamSoup *output, int le
 
 void NexusBuilder::createLevel(KDTree *in, Stream *out, int level) {
 	KDTreeSoup *isSoup = dynamic_cast<KDTreeSoup *>(in);
-	if(!test){
+	if(!isSoup){
 		KDTreeCloud *input = dynamic_cast<KDTreeCloud *>(in);
 		StreamCloud *output = dynamic_cast<StreamCloud *>(out);
 		createCloudLevel(input, output, level);
