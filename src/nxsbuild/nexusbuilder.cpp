@@ -397,10 +397,12 @@ QImage NexusBuilder::extractNodeTex(TMesh &mesh, int level, float &error, float 
 		exit(0);
 	}
 
+	cout << " >>>>>>>>>>>>>> KON is here" << endl;
 	if (createPowTwoTex) {
         finalSize[ 0 ] = (int) nextPowerOf2( finalSize[ 0 ] );
         finalSize[ 1 ] = (int) nextPowerOf2( finalSize[ 1 ] );
     }
+    cout << " >>>>>>>>>>>>> Tex size: " << finalSize[ 0 ] << " x " << finalSize[ 1 ] << endl;
 
 	//	std::cout << "Boxes: " << boxes.size() << " Final size: " << finalSize[0] << " " << finalSize[1] << std::endl;
 	QImage image(finalSize[0], finalSize[1], QImage::Format_RGB32);
