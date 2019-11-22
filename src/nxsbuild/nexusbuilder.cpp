@@ -674,6 +674,13 @@ void NexusBuilder::createLevel(KDTree *in, Stream *out, int level) {
 					output_pixels += nodetex.width()*nodetex.height();
 					Texture t;
 					t.offset = nodeTex.size()/NEXUS_PADDING;
+					t.width =  nodetex.width();
+					t.height = nodetex.height();
+
+					//Pack into uint32 array
+					uint64_t* byteLength = (uint64_t*)&t.byteLength[0];
+					*byteLength = nodetex.width()*nodetex.height()*4;
+
 					textures.push_back(t);
 
 					QImageWriter writer(&nodeTex, "jpg");

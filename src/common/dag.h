@@ -78,18 +78,36 @@ struct Patch {
 	uint32_t texture;          //index of the texture in the array of textures
 };
 
+
+#define TEXURE_MAGIC_CODE 0x7F800001
+
 struct Texture {
 	uint32_t offset;
-	float matrix[16];
-	Texture(): offset(-1) {
-		for(int i = 0; i < 16; i++)
-			matrix[i] = 0;
+	//This texture meta data replaces an unused 4x4 transform matrix
+	uint32_t width;
+	uint32_t height;
+	uint32_t magic; //Magic indentifies this as image metadata, not transform matrix
+
+	uint32_t byteLength[2]; //Encode 64-bit bytelength as two 32-bit number to avoid packing problems
+	uint32_t padding[11];
+
+	Texture(): 
+		offset(-1),
+		magic(TEXURE_MAGIC_CODE),
+		width(0),
+		height(0)  
+	{
+		byteLength[0] = 0;
+		byteLength[1] = 0;
 	}
 
 	uint64_t getBeginOffset() { return (uint64_t)offset * (uint64_t) NEXUS_PADDING; }
 	uint64_t getEndOffset() { return (this+1)->getBeginOffset(); }
 	uint64_t getSize() { return getEndOffset() - getBeginOffset(); }
 };
+
+static_assert( sizeof(Texture)==68, "Invalid texture size" );
+
 
 }//
 #endif // NX_DAG_H
